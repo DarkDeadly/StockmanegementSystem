@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+
+:root {
+    --primaryColor : #BF4408 ; 
+    --secondaryColor : #FF770A ;
+    --MainHeadline : clamp(2rem, 5vw + 1rem, 3rem);
+    --SubHeadline :  clamp(1.5rem, 1.1rem + 1vw, 2rem);
+    --MiniHeadline : clamp(1.125rem, 1.05rem + 0.5vw, 1.375rem);
+    --ParaLinks : clamp(0.9375rem, 0.9rem + 0.3vw, 1rem);
+    --LogoText : clamp(1.5rem, 1.3rem + 1vw, 2rem);
+    --MainSubLineHeight : 1.3rem ;
+    --MiniLineHeight : 1.4rem ;
+    --ParaLinkLineHeight : 1.6rem ;
+    --LogoLineHeight : 1.2rem
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    font-size: var(--ParaLinks);
+    line-height: var(--ParaLinkLineHeight);
+    align-items: center;
+}
+
+.navBtn {
+    padding: 10px 30px;
+    background-color: var(--primaryColor);
+    border: 1px solid var(--primaryColor);
+    border-radius: 20px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color ease-in 0.4s;
+    font-size: var(--ParaLinks);
+}
+.navBtn:hover {
+    background-color: var(--secondaryColor);
+    border: 1px solid var(--secondaryColor);
+    color: #fff;
+}
