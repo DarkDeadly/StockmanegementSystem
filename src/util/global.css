@@ -22,14 +22,21 @@
 }
 
 ul {
-    list-style: none;
     display: flex;
     gap: 20px;
-    font-size: var(--ParaLinks);
-    line-height: var(--ParaLinkLineHeight);
     align-items: center;
 }
-
+ul a {
+    font-size: var(--ParaLinks);
+    line-height: var(--ParaLinkLineHeight);
+    color: #000;
+    text-decoration: none;
+    transition: border-bottom ease-in .5s , color ease .5s;
+}
+ul a:hover {
+    border-bottom: 1px solid var(--primaryColor);
+    color: var(--primaryColor);
+}
 .navBtn {
     padding: 10px 30px;
     background-color: var(--primaryColor);
