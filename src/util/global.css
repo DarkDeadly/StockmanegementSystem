@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
+
+
+
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -10,6 +15,7 @@
 :root {
     --primaryColor : #BF4408 ; 
     --secondaryColor : #FF770A ;
+    --thirdColor : #092234;
     --MainHeadline : clamp(2rem, 5vw + 1rem, 3rem);
     --SubHeadline :  clamp(1.5rem, 1.1rem + 1vw, 2rem);
     --MiniHeadline : clamp(1.125rem, 1.05rem + 0.5vw, 1.375rem);
@@ -18,7 +24,9 @@
     --MainSubLineHeight : 1.3rem ;
     --MiniLineHeight : 1.4rem ;
     --ParaLinkLineHeight : 1.6rem ;
-    --LogoLineHeight : 1.2rem
+    --LogoLineHeight : 1.2rem ;
+    --headingFont : "Merriweather", serif;
+    --paraFont : Verdana, Tahoma, sans-serif;
 }
 
 ul {
