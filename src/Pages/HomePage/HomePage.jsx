@@ -3,9 +3,17 @@ import '../../util/global.css'
 import './homepage.css'
 import Btn from '../../Component/button/Btn'
 import HomePageCarousel from '../../Component/homepageComponents/HomePageCarousel'
-import CarouselData from "../../util/util"
+import {imageDataCarousel , Features} from "../../util/util.js"
 import { Carousel } from 'antd'
+import FeatureImage from "../../assets/FeatureImage.png"
+import HomePageFeatures from '../../Component/homepageComponents/HomePageFeatures'
+import { useState } from 'react'
 const HomePage = () => {
+  const [Selected, setSelected] = useState(null)
+  const FeatureSelected = (item) => {
+    setSelected(item)
+  }
+
   return (
     <>
     <Header/>
@@ -19,17 +27,32 @@ const HomePage = () => {
         <Btn btnText='Learn More'  btnClass='navBtn Hero__btn'/>
       </div>
     </section>
-    <section className = "CarouselContainer">
             <Carousel autoplay  className='Carousel__Wrapper' autoplaySpeed={3000}> 
-            {CarouselData.map((item) => (
+            {imageDataCarousel.map((item) => (
                 <HomePageCarousel 
                   CarouselImage={item.CarouselImage} 
                   CarouselHeading={item.CarouselHeading} 
                   CarousselText={item.CarouselText} 
             />
             ))}
-          </Carousel>
-          
+          </Carousel>     
+    <section className="feature__Section">
+      <h2>StockMaster Features</h2>
+    <div className="features__Section">
+      <img src={FeatureImage} alt="featureImg" />
+       <div className="Feature__content">
+            {Features.map((item) => (
+              <HomePageFeatures 
+              key={item.id}
+              Feature__Text={item.FeatureText} 
+              Feature__Title={item.FeatureHeadLine}
+              FeatureClass={`FeatureContainer ${Selected === item.id ? "Active" : ""}`}
+              OnClickFn={() => FeatureSelected(item.id)}
+              />
+
+            ))}
+        </div>   
+    </div>    
     </section>
     </>
   )
