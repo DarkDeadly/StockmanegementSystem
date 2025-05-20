@@ -70,6 +70,10 @@
     justify-content: space-evenly;
     overflow-y: hidden;
 }
+.cta__section {
+    display: flex;
+    justify-content: center;
+}
 
 /* Responsive */
 @media (max-width: 678px) {
@@ -78,7 +82,10 @@
         align-items: center;
         padding: 20px;
     }
-    .features__Section img {
+   
+}
+@media (max-width : 758px) {
+ .features__Section img {
         display: none;
     }
 }
