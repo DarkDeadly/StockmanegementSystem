@@ -9,6 +9,7 @@ import FeatureImage from "../../assets/FeatureImage.png"
 import HomePageFeatures from '../../Component/homepageComponents/HomePageFeatures'
 import { useState } from 'react'
 import Cta from '../../Component/homepageComponents/Cta.jsx'
+import { Link } from 'react-router'
 const HomePage = () => {
   const [Selected, setSelected] = useState(null)
   const FeatureSelected = (item) => {
@@ -59,6 +60,17 @@ const HomePage = () => {
       <section className="cta__section">
         <Cta/>
       </section>
+
+      <footer className='Footer__section'>
+            <h1>StockMaster</h1>
+            <div className="footer__nav">
+               <Link>Contact Us</Link>
+                <Link>Abouts Us</Link>
+               <Link>Whats New</Link>
+            </div>
+            <hr/>
+            © 2025 StockMaster Anis
+      </footer>
     </>
   )
 }
