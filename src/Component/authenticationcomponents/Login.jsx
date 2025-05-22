@@ -18,7 +18,11 @@ const Login = () => {
                             <Input size="large" placeholder="you@example.com" prefix={<MailOutlined />} className='Input__Box' />
                             <Input size="large" placeholder="Enter your Password" type={passHidden ? 'text' : 'password'} prefix={<LockOutlined />} className='Input__Box'  suffix = {passHidden ? <EyeInvisibleOutlined onClick={ShowPass} /> : <EyeOutlined onClick={ShowPass}/>}/>
                             <span className='forget__pass'>Forget Password</span>
+                            <div className="login__button">
                             <button className='navBtn LoginBtn'>Login</button>
+                            <button className='navBtn LoginBtn register'>Register</button>
+
+                            </div>
                             <p>or sign in with social Media</p>
                             <div className="SocialMedia__content">
                                 <GoogleOutlined size={100} />

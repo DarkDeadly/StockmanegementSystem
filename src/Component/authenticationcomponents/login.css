@@ -1,9 +1,12 @@
-.LoginBtn {
+.LoginBtn  {
     width: 40%;
     border-radius: 10px;
     padding: 15px 20px;
+    margin-right: 10px;
 }
-
+.register {
+    display: none;
+}
 .login__Container {
     width: 100%;
     height: 100%;
@@ -16,6 +19,8 @@
     height: 100%;
     display: flex;
     justify-content: center;
+        
+
     
     .form__Box {
         height: 100%;
@@ -60,6 +65,7 @@
     align-items: center;
     justify-content: center;
     background-color: #FAF9F6;
+    text-align: center;
   
    .register__content {
       display: flex;
@@ -108,4 +114,29 @@
     .anticon:hover {
         border-color: var(--secondaryColor);
     }
+}
+
+
+
+@media (max-width : 750px) {
+    .register__Annoucement  {
+        display: none;
+    }
+      .login__Content .form__Box {
+        width: 90%;
+     }
+     .login__Content {
+        width: 100%;
+        
+     }
+     .register {
+        display: block;
+     }
+     .login__button {
+        display: flex;
+        justify-content: center;
+     }
+     .Input__Box {
+        width: 100%;
+     }
 }
