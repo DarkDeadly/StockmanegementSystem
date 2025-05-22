@@ -9,12 +9,13 @@ import FeatureImage from "../../assets/FeatureImage.png"
 import HomePageFeatures from '../../Component/homepageComponents/HomePageFeatures'
 import { useState } from 'react'
 import Cta from '../../Component/homepageComponents/Cta.jsx'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 const HomePage = () => {
   const [Selected, setSelected] = useState(null)
   const FeatureSelected = (item) => {
     setSelected(item)
   }
+  const navigate = useNavigate()
 
   return (
     <>
@@ -25,7 +26,7 @@ const HomePage = () => {
           levels, orders and more with ease.
         </p>
         <div className="Hero__sectionBtns">
-          <Btn btnText='Get Started' btnClass='navBtn' />
+          <Btn btnText='Get Started' btnClass='navBtn' btnClick={() => navigate("/Authentication")} />
           <Btn btnText='Learn More' btnClass='navBtn Hero__btn' />
         </div>
       </section>
@@ -69,7 +70,7 @@ const HomePage = () => {
                <Link>Whats New</Link>
             </div>
             <hr/>
-            © 2025 StockMaster Anis
+            © 2025 StockMaster
       </footer>
     </>
   )

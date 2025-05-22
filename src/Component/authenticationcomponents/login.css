@@ -1,0 +1,111 @@
+.LoginBtn {
+    width: 40%;
+    border-radius: 10px;
+    padding: 15px 20px;
+}
+
+.login__Container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+ 
+}
+.login__Content {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    
+    .form__Box {
+        height: 100%;
+        width: 55%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+        h1 {
+            font-size: var(--SubHeadline);
+            font-family: var(--headingFont);
+            text-align: center;
+        }
+        form {
+           display: flex;
+           flex-direction: column;
+           gap: 20px; 
+           .forget__pass {
+            text-decoration: underline;
+            color: var(--thirdColor);
+            cursor: pointer;
+            transition: color ease 0.7s;
+           }
+           .forget__pass:hover {
+            color: blueviolet;
+           }
+           p {
+            text-align: center;
+            font-size: var(--ParaLinks);
+            font-family: var(--paraFont);
+           }
+         
+        }
+
+        
+    }
+}
+.register__Annoucement {
+    height: 100%;
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FAF9F6;
+  
+   .register__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+
+  h1 {
+        font-size: var(--SubHeadline);
+        font-family: var(--headingFont);
+    }
+    p {
+        font-size: var(--ParaLinks);
+        font-family: var(--paraFont);
+    }
+      .RegisterBtn {
+            border-radius: 10px;
+            padding: 15px 20px;
+            width: 80%;
+           
+           }
+   }
+
+  
+ 
+}
+.Input__Box .ant-input-prefix {
+  margin-right: 10px; 
+}
+.Input__Box {
+    width: 95%;
+}
+.SocialMedia__content {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    .anticon {
+        font-size: 35px;
+        padding: 10px;
+        cursor: pointer;
+        border: 2px solid var(--thirdColor);
+        border-radius: 30px;
+        color: #DB4437;
+        transition: border-color ease-in 0.5s;
+    }
+    .anticon:hover {
+        border-color: var(--secondaryColor);
+    }
+}

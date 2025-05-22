@@ -1,0 +1,9 @@
+.Authentication {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.Authentication > *:last-child {
+    flex: 1;
+}
