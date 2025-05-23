@@ -2,9 +2,10 @@ import { EyeInvisibleOutlined, EyeOutlined, FacebookOutlined, GoogleOutlined, Lo
 import { Input } from 'antd'
 import React, { useState } from 'react'
 import './login.css'
+import { useNavigate } from 'react-router'
 const Login = () => {
     const [passHidden, setpassHidden] = useState(false)
-
+    const navigate = useNavigate()
     const ShowPass = () => {
         setpassHidden(!passHidden)
     }
@@ -20,7 +21,7 @@ const Login = () => {
                             <span className='forget__pass'>Forget Password</span>
                             <div className="login__button">
                             <button className='navBtn LoginBtn'>Login</button>
-                            <button className='navBtn LoginBtn register'>Register</button>
+                            <button className='navBtn LoginBtn register' onClick={()=> navigate('/Authentication/Register')}>Register</button>
 
                             </div>
                             <p>or sign in with social Media</p>
@@ -35,7 +36,7 @@ const Login = () => {
                         <div className="register__content">
                         <h1>Hello , Welcome to StockMaster</h1>
                         <p>don't have an account ?</p>
-                        <button className='navBtn RegisterBtn'>Register</button>
+                        <button className='navBtn RegisterBtn' onClick={()=> navigate('/Authentication/Register')}>Register</button>
                         </div>
                     </div>
                 </div>

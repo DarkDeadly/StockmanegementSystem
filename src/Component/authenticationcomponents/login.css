@@ -1,4 +1,4 @@
-.LoginBtn  {
+.LoginBtn , .RegisterBtn  {
     width: 40%;
     border-radius: 10px;
     padding: 15px 20px;
@@ -14,7 +14,7 @@
     justify-content: center;
  
 }
-.login__Content {
+.login__Content , .register__Content {
     width: 90%;
     height: 100%;
     display: flex;
@@ -58,7 +58,7 @@
         
     }
 }
-.register__Annoucement {
+.register__Annoucement ,.login__Annoucement {
     height: 100%;
     width: 45%;
     display: flex;
@@ -67,7 +67,7 @@
     background-color: #FAF9F6;
     text-align: center;
   
-   .register__content {
+   .register__content , .login__content {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -81,7 +81,7 @@
         font-size: var(--ParaLinks);
         font-family: var(--paraFont);
     }
-      .RegisterBtn {
+      .RegisterBtn, .loginBtn {
             border-radius: 10px;
             padding: 15px 20px;
             width: 80%;
@@ -119,13 +119,13 @@
 
 
 @media (max-width : 750px) {
-    .register__Annoucement  {
+    .register__Annoucement , .login__Annoucement {
         display: none;
     }
-      .login__Content .form__Box {
+      .login__Content .form__Box , .register__Content .form__Box {
         width: 90%;
      }
-     .login__Content {
+     .login__Content , .register__content {
         width: 100%;
         
      }
