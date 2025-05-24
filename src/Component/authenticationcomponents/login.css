@@ -38,6 +38,13 @@
            display: flex;
            flex-direction: column;
            gap: 20px; 
+           .error-message {
+                            color: red;
+                            font-size: var(--ParaLinks);
+                            font-weight: 600;
+                            text-align: left;
+                            list-style: none;
+                        }
            .forget__pass {
             text-decoration: underline;
             color: var(--thirdColor);
@@ -72,6 +79,7 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      
 
   h1 {
         font-size: var(--SubHeadline);
