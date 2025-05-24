@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import Header from '../header/Header'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import './register.css'
 import "./login.css"
 import { EyeInvisibleOutlined, EyeOutlined, FacebookOutlined, GoogleOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
-import { Input } from 'antd'
+import { Alert, Input } from 'antd'
 import { useNavigate } from 'react-router'
 import { EmailVerif, PasswordVerif, confirmPassVerif } from '../../util/util.js'
 const Register = () => {
@@ -12,10 +13,62 @@ const Register = () => {
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
     const [PassConfirm, setPassConfirm] = useState("")
+    const [emailError, setEmailError] = useState('');
+
     const navigate = useNavigate()
     const errors = PasswordVerif(Password)
 
+    const SignUpAccount = async (email, password, confirmPass) => {
+        const auth = getAuth()
+        const emailverif = EmailVerif(email)
+        const passwordVerif = PasswordVerif(password)
+        const ConfirmPass = confirmPassVerif(password, confirmPass)
 
+        if (emailverif !== true) {
+            return { success: false, message: emailverif, type: 'email' };
+        }
+        if (passwordVerif.length > 0) {
+            return { success: false, message: passwordVerif, type: 'password' };
+        }
+        if (ConfirmPass !== true) {
+            return { success: false, message: ConfirmPass, type: 'confirmPass' };
+        }
+
+
+        if (emailverif && passwordVerif && ConfirmPass) {
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+                const user = userCredential.user
+                return { success: true, user };
+            } catch (error) {
+                const errorMessages = {
+                    'auth/email-already-in-use': 'This email is already registered.',
+                    'auth/invalid-email': 'Please enter a valid email address.',
+                    'auth/weak-password': 'Password must be at least 6 characters.',
+                    'auth/operation-not-allowed': 'Email/password sign-up is disabled.',
+                };
+                const message = errorMessages[error.code] || error.message || 'An error occurred during sign-up.';
+                return { success: false, message, type: 'email' };
+            }
+        }
+    }
+
+    const SubmitSignUp = async (e) => {
+        e.preventDefault() ;
+        setEmailError('');
+
+        const result = await SignUpAccount(Email , Password , PassConfirm);
+        if (result.success) {
+            (<Alert message="Signed up Successfully" type="success" />) ;
+            navigate("/Authentication")
+        }
+        else {
+            if (result.type === 'email') {
+        setEmailError(result.message);
+      }
+        }
+        
+    }
 
     const PassInput = () => {
         if (!Password) return ""
@@ -44,7 +97,7 @@ const Register = () => {
                 <div className="register__Content">
                     <div className="form__Box Login">
                         <h1>Welcome to StockMaster</h1>
-                        <form action="">
+                        <form onSubmit={SubmitSignUp}>
                             <Input
                                 size="large"
                                 placeholder="you@example.com"
@@ -56,6 +109,7 @@ const Register = () => {
                             {Email && EmailVerif(Email) !== true && (
                                 <p className="error-message">{EmailVerif(Email)}</p>
                             )}
+                            {emailError && <p className="error-message" id="emailError">{emailError}</p>}
                             <Input
                                 size="large"
                                 placeholder="Enter your Password"
@@ -67,7 +121,7 @@ const Register = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             {Password && errors.length > 0 && (
-                                <ul className="error-message">
+                                <ul className="error-message" >
                                     {errors.map((err, i) => (
                                         <li key={i}>{err}</li>
                                     ))}
@@ -84,7 +138,7 @@ const Register = () => {
                             {PassConfirm && confirmPassVerif(PassConfirm, Password) !== true && (
                                 <p className="error-message">{confirmPassVerif(PassConfirm, Password)}</p>
                             )}
-                            <button className='navBtn RegisterBtn '>Register</button>
+                            <button className='navBtn RegisterBtn ' onClick={SubmitSignUp}>Register</button>
                             <p>or sign up with social Media</p>
                             <div className="SocialMedia__content">
                                 <GoogleOutlined size={100} />

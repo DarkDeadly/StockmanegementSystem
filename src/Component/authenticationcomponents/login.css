@@ -44,6 +44,9 @@
                             font-weight: 600;
                             text-align: left;
                             list-style: none;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: start;
                         }
            .forget__pass {
             text-decoration: underline;
