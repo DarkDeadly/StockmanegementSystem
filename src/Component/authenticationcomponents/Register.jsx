@@ -7,6 +7,7 @@ import { EyeInvisibleOutlined, EyeOutlined, FacebookOutlined, GoogleOutlined, Lo
 import { Alert, Input } from 'antd'
 import { useNavigate } from 'react-router'
 import { EmailVerif, PasswordVerif, confirmPassVerif } from '../../util/util.js'
+import {auth} from '../../util/firebase.js'
 const Register = () => {
     const [passHidden, setpassHidden] = useState(false)
     const [confirmpassHidden, setconfirmpassHidden] = useState(false)
@@ -19,7 +20,6 @@ const Register = () => {
     const errors = PasswordVerif(Password)
 
     const SignUpAccount = async (email, password, confirmPass) => {
-        const auth = getAuth()
         const emailverif = EmailVerif(email)
         const passwordVerif = PasswordVerif(password)
         const ConfirmPass = confirmPassVerif(password, confirmPass)
