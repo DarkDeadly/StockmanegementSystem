@@ -115,7 +115,12 @@
         border-color: var(--secondaryColor);
     }
 }
-
+.valid {
+    border-color: rgb(10, 199, 26);
+}
+.invalid {
+    border-color: red;
+}
 
 
 @media (max-width : 750px) {

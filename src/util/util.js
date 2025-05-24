@@ -38,3 +38,31 @@ export const Features = [
     FeatureText: "Generate Detailed Reports"
   }
 ];
+
+export const EmailVerif = (email) => {
+   if ( /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return true
+   }
+   return "Invalid Email Format"
+}
+export const PasswordVerif = (signUp_Password) => {
+   let PasswordErrors = [];
+
+    if (signUp_Password.length < 8) {
+        PasswordErrors.push("Password must be at least 8 characters long");
+    }
+    if (!/[A-Z]/.test(signUp_Password)) {
+        PasswordErrors.push("Password must contain at least one uppercase letter");
+    }
+    if (!/\d/.test(signUp_Password)) {
+        PasswordErrors.push("Password must contain at least one number");
+    }
+
+   return PasswordErrors
+}
+export const confirmPassVerif = (password , confirmPassword) => {
+  if (password === confirmPassword) {
+    return true
+  }
+  return "Password doesnt match"
+}
