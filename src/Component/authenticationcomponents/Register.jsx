@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Header from '../header/Header'
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import './register.css'
 import "./login.css"
 import { EyeInvisibleOutlined, EyeOutlined, FacebookOutlined, GoogleOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
@@ -59,12 +59,12 @@ const Register = () => {
 
         const result = await SignUpAccount(Email , Password , PassConfirm);
         if (result.success) {
-            (<Alert message="Signed up Successfully" type="success" />) ;
+            <Alert message="Signed up Successfully" type="success" /> ;
             navigate("/Authentication")
         }
         else {
             if (result.type === 'email') {
-        setEmailError(result.message);
+            setEmailError(result.message);
       }
         }
         
@@ -117,7 +117,7 @@ const Register = () => {
                                 prefix={<LockOutlined />}
                                 className={`Input__Box ${PassInput()}`}
                                 suffix={passHidden ? <EyeInvisibleOutlined
-                                    onClick={ShowPass} /> : <EyeOutlined onClick={ShowPass} />}
+                                onClick={ShowPass} /> : <EyeOutlined onClick={ShowPass} />}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             {Password && errors.length > 0 && (
@@ -138,7 +138,7 @@ const Register = () => {
                             {PassConfirm && confirmPassVerif(PassConfirm, Password) !== true && (
                                 <p className="error-message">{confirmPassVerif(PassConfirm, Password)}</p>
                             )}
-                            <button className='navBtn RegisterBtn ' onClick={SubmitSignUp}>Register</button>
+                            <button className='navBtn RegisterBtn ' type="submit">Register</button>
                             <p>or sign up with social Media</p>
                             <div className="SocialMedia__content">
                                 <GoogleOutlined size={100} />

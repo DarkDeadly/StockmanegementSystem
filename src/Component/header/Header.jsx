@@ -21,6 +21,7 @@ const Header = () => {
                 <h1>Stock <span>Master</span></h1>
                 <ul className={`Header__nav ${isMenuOpen ? 'open' : ''}`}>
                     <Link to='/'>Home</Link>
+                    <Link to="/Products">Products</Link>
                     <Link to='/Analytics'>Analytics</Link>
                     <Link to='/Users'>Users</Link>
                     <Link to='/About'>About US</Link>
