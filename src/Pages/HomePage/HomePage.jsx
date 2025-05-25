@@ -7,11 +7,25 @@ import { imageDataCarousel, Features } from "../../util/util.js"
 import { Carousel } from 'antd'
 import FeatureImage from "../../assets/FeatureImage.png"
 import HomePageFeatures from '../../Component/homepageComponents/HomePageFeatures'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Cta from '../../Component/homepageComponents/Cta.jsx'
 import { Link, useNavigate } from 'react-router'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../../util/firebase.js'
 const HomePage = () => {
   const [Selected, setSelected] = useState(null)
+      const [isLoggedIn, setIsLoggedIn] = useState(false);
+      useEffect(() => {
+          const unsubscribe = onAuthStateChanged(auth, (user) => {
+              if (user) {
+                  setIsLoggedIn(true);
+              } else {
+                  setIsLoggedIn(false);
+              }
+          });
+  
+          return () => unsubscribe();
+      }, []);
   const FeatureSelected = (item) => {
     setSelected(item)
   }
@@ -25,10 +39,14 @@ const HomePage = () => {
         <p>Streamline your inventory with our cutting-edge stock management system. Take control of your stock
           levels, orders and more with ease.
         </p>
-        <div className="Hero__sectionBtns">
+       {
+        !isLoggedIn && (
+           <div className="Hero__sectionBtns">
           <Btn btnText='Get Started' btnClass='navBtn' btnClick={() => navigate("/Authentication")} />
           <Btn btnText='Learn More' btnClass='navBtn Hero__btn' />
         </div>
+        )
+       }
       </section>
       <Carousel autoplay className='Carousel__Wrapper' autoplaySpeed={3000}>
         {imageDataCarousel.map((item) => (
@@ -58,9 +76,13 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <section className="cta__section">
+      {
+        !isLoggedIn && (
+          <section className="cta__section">
         <Cta/>
       </section>
+        )
+      }
 
       <footer className='Footer__section'>
             <h1>StockMaster</h1>

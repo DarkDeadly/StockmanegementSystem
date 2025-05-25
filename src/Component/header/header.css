@@ -12,6 +12,12 @@ header {
     background-color: #fff;
   
 }
+.LogoutBtn {
+        display: none;
+
+} 
+
+
 nav {
     display: flex;
     gap: 30px;
@@ -79,6 +85,13 @@ header {
     .Header__nav.open {
    
     margin-right: 0;
+}
+.LogoutBtn {
+        display: block;
+
+} 
+.SIgnoutBtn {
+    display: none;
 }
 }
 @media (max-width : 634px) {
