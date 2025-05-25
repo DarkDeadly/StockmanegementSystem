@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import Header from '../header/Header'
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import './register.css'
 import "./login.css"
 import { EyeInvisibleOutlined, EyeOutlined, FacebookOutlined, GoogleOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
-import { Alert, Input } from 'antd'
+import { Input, message } from 'antd'
 import { useNavigate } from 'react-router'
 import { EmailVerif, PasswordVerif, confirmPassVerif } from '../../util/util.js'
-import {auth} from '../../util/firebase.js'
+import { auth, db } from '../../util/firebase.js'
+import { collection, doc, setDoc } from 'firebase/firestore';
 const Register = () => {
     const [passHidden, setpassHidden] = useState(false)
     const [confirmpassHidden, setconfirmpassHidden] = useState(false)
@@ -18,7 +19,13 @@ const Register = () => {
 
     const navigate = useNavigate()
     const errors = PasswordVerif(Password)
-
+    const setUpDisplayName = (email) => {
+        const trimmedEmail = email.trim();
+        if (EmailVerif(trimmedEmail) === true) {
+            return trimmedEmail.split("@")[0];
+        }
+        return "";
+    };
     const SignUpAccount = async (email, password, confirmPass) => {
         const emailverif = EmailVerif(email)
         const passwordVerif = PasswordVerif(password)
@@ -36,9 +43,17 @@ const Register = () => {
 
 
         if (emailverif && passwordVerif && ConfirmPass) {
+            const username = setUpDisplayName(email);
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password)
                 const user = userCredential.user
+                await updateProfile(user, { displayName: username });
+                await setDoc(doc(db, "Users", user.uid), {
+                    uid: user.uid,
+                    username: username,
+                    email: user.email,
+                    role : "user"
+                });
                 return { success: true, user };
             } catch (error) {
                 const errorMessages = {
@@ -54,20 +69,20 @@ const Register = () => {
     }
 
     const SubmitSignUp = async (e) => {
-        e.preventDefault() ;
+        e.preventDefault();
         setEmailError('');
 
-        const result = await SignUpAccount(Email , Password , PassConfirm);
+        const result = await SignUpAccount(Email, Password, PassConfirm);
         if (result.success) {
-            <Alert message="Signed up Successfully" type="success" /> ;
-            navigate("/Authentication")
+            message.success("Signed up Successfully");
+            navigate("/")
         }
         else {
             if (result.type === 'email') {
-            setEmailError(result.message);
-      }
+                setEmailError(result.message);
+            }
         }
-        
+
     }
 
     const PassInput = () => {
@@ -117,7 +132,7 @@ const Register = () => {
                                 prefix={<LockOutlined />}
                                 className={`Input__Box ${PassInput()}`}
                                 suffix={passHidden ? <EyeInvisibleOutlined
-                                onClick={ShowPass} /> : <EyeOutlined onClick={ShowPass} />}
+                                    onClick={ShowPass} /> : <EyeOutlined onClick={ShowPass} />}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             {Password && errors.length > 0 && (
