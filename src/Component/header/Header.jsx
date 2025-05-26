@@ -2,25 +2,45 @@ import React, { useEffect, useState } from 'react';
 import { IoMdMenu } from "react-icons/io";
 import { RxCross1 } from "react-icons/rx";
 import { Link, useNavigate } from "react-router";
-import { auth } from "../../util/firebase"
+import { auth, db } from "../../util/firebase"
 import "./header.css";
 import Btn from '../button/Btn';
 import { onAuthStateChanged , signOut } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setIsLoggedIn(true);
-            } else {
-                setIsLoggedIn(false);
-            }
-        });
+    const [isAdmin, setIsAdmin] = useState(false);
 
-        return () => unsubscribe();
-    }, []);
+useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            setIsLoggedIn(true);
+
+            try {
+                const userSnap = await getDoc(doc(db, "Users", user.uid));
+                if (userSnap.exists()) {
+                    const userData = userSnap.data();
+                    setIsAdmin(userData.role === "admin");
+                } else {
+                    console.warn("User document does not exist in Firestore.");
+                    setIsAdmin(false);
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+                setIsAdmin(false);
+            }
+
+        } else {
+            setIsLoggedIn(false);
+            setIsAdmin(false);
+        }
+    });
+
+    return () => unsubscribe();
+}, []);
+
     const SignOut = async() => {
         try {
             await signOut(auth)
@@ -45,8 +65,14 @@ const Header = () => {
                     {
                         isLoggedIn && (<>
                             <Link to="/Products" >Products</Link>
-                            <Link to='/Analytics' >Analytics</Link>
-                            <Link to='/Users' >Users</Link>
+                            {
+                                isAdmin && (
+                                    <>
+                                     <Link to='/Analytics' >Analytics</Link>
+                                     <Link to='/Users' >Users</Link>
+                                    </>
+                                )
+                            }
                         </>)
                     }
                     <Link to='/About'>About US</Link>
