@@ -1,11 +1,11 @@
-import { EyeInvisibleOutlined, EyeOutlined, LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
-import { Alert, Avatar, Button, Input, message, Modal } from 'antd'
+import { EyeInvisibleOutlined, EyeOutlined, LockOutlined,  UserOutlined } from '@ant-design/icons'
+import {  Avatar,  Input, message, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
 import './profilecontent.css'
 import Btn from '../button/Btn'
 import { EmailAuthProvider, onAuthStateChanged, reauthenticateWithCredential, updatePassword } from 'firebase/auth'
 import { auth, db } from '../../util/firebase'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc ,updateDoc  } from 'firebase/firestore'
 import { PasswordVerif } from '../../util/util'
 const ProfileContent = () => {
     const [ProfileUser, setProfileUser] = useState()
@@ -15,6 +15,7 @@ const ProfileContent = () => {
     const [Password, setPassword] = useState("")
     const [NewPassword, setNewPassword] = useState("")
     const [currenpassError, setcurrenpassError] = useState("")
+    const [Username, setUsername] = useState("")
         const errors = PasswordVerif(NewPassword)
 
     const showModal = () => {
@@ -30,12 +31,15 @@ const ProfileContent = () => {
         setPassword("")
         setNewPassword("")
     };
+
     const ShowPass = () => {
         setpassHidden(!passHidden)
     }
+
     const showConfirm = () => {
         setconfirmpassHidden(!confirmpassHidden)
     }
+
     useEffect(() => {
         const ProfileUserShowcase = onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -58,7 +62,9 @@ const ProfileContent = () => {
 
         return () => ProfileUserShowcase()
     }, [])
+
     console.log(ProfileUser)
+
     const HandlepasswordChange = async (password, newPass) => {
         try {
             const user = auth.currentUser
@@ -93,6 +99,19 @@ const ProfileContent = () => {
         }
         }
     }
+
+    const UsernameEdit = async(username , currentUsername) => {
+        const trimmeduserName = username || currentUsername
+        const user = auth.currentUser
+        try {
+            await   updateDoc(doc(db , "Users" , user.uid) , {username : trimmeduserName})
+            message.success("Username updated successfully");
+            window.location.reload()
+        } catch (error) {
+           console.log(error) 
+        }
+        
+    }
     return (
         <div className='ProfileContent'>
             <div className="Profile">
@@ -112,11 +131,16 @@ const ProfileContent = () => {
                 <div className="Profile__Form">
                     <form action="" className='Profile__FormContent'>
                         <h2>Account Settings</h2>
-                        <Input size="large" placeholder={ProfileUser?.data?.username || "Username"} prefix={<UserOutlined />} />
-                        <Input size="large" placeholder={ProfileUser?.data?.email || "Email"} prefix={<MailOutlined />} type='email' />
+                        <Input 
+                        size="large" 
+                        placeholder={ProfileUser?.data?.username || "Username"} 
+                        prefix={<UserOutlined />} 
+                        onChange={(e) => setUsername(e.target.value)}
+                        
+                        />
                         <div className="formBtns">
                             <Btn btnText='Change Password' btnClass=' navBtn Btns' btnClick={showModal} />
-                            <Btn btnText='Submit Changes' btnClass=' navBtn Btns' />
+                            <Btn btnText='Submit Changes' btnClass=' navBtn Btns' btnClick={()=> UsernameEdit(Username ,ProfileUser?.data?.username )} />
                         </div>
 
 
