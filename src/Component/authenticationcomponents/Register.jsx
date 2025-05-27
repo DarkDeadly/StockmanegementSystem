@@ -8,7 +8,7 @@ import { Input, message } from 'antd'
 import { useNavigate } from 'react-router'
 import { EmailVerif, PasswordVerif, confirmPassVerif } from '../../util/util.js'
 import { auth, db } from '../../util/firebase.js'
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, Timestamp } from 'firebase/firestore';
 const Register = () => {
     const [passHidden, setpassHidden] = useState(false)
     const [confirmpassHidden, setconfirmpassHidden] = useState(false)
@@ -52,7 +52,8 @@ const Register = () => {
                     uid: user.uid,
                     username: username,
                     email: user.email,
-                    role : "user"
+                    role : "user",
+                    createdAt : Timestamp.now()
                 });
                 return { success: true, user };
             } catch (error) {

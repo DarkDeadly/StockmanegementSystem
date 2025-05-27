@@ -1,0 +1,59 @@
+.Profile__FormContent .ant-input-prefix {
+  margin-right: 10px; 
+}
+.ProfileContent {
+   
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+    align-items: center;   
+        .Profile__Header {
+            h1 {
+                font-size: var(--MainHeadline);
+                font-family: var(--headingFont);  
+                letter-spacing: 5px; 
+            }
+            p {
+                font-size: var(--ParaLinks);
+                font-family: var(--paraFont);
+                color: var(--primaryColor);
+                text-decoration: underline;
+            }
+        } 
+        .Profile__Image {
+            text-align: center;
+            p {
+                font-size: var(--ParaLinks);
+                font-family: var(--paraFont);
+                padding-top: 10px;
+                letter-spacing: 5px;
+            }
+        }
+        .Profile__FormContent {
+            h2 {
+                 font-size: var(--SubHeadline);
+                font-family: var(--headingFont); 
+                letter-spacing: 5px;
+            }
+            .formBtns {
+                display: flex;
+                gap: 20px;
+                .Btns {
+                    padding: 10px 20px;
+                    border-radius: 10px;
+                }
+            }
+        }
+}
+
+.Profile {
+    width: 90%;
+    height: 100%;
+    background-color: #FCF9F8;
+}
+.Profile__FormContent {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}

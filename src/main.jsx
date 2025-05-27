@@ -10,6 +10,7 @@ import UserManagement from './Pages/UserManagement/UserManagement.jsx';
 import Auth from './Pages/Authentication/Auth.jsx';
 import Register from './Component/authenticationcomponents/Register';
 import Product from './Pages/Products/Product.jsx';
+import Profile from './Pages/Profile/Profile.jsx';
 
 const routing  = createBrowserRouter(
   [
@@ -44,6 +45,10 @@ const routing  = createBrowserRouter(
     {
       path : '/Products',
       element : <Product/>
+    },
+    {
+      path : "/Profile",
+      element : <Profile/>
     }
   ]
 )

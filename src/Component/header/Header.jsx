@@ -60,11 +60,12 @@ useEffect(() => {
         <header>
             <nav>
                 <h1>Stock <span>Master</span></h1>
-                <ul className={`Header__nav ${isMenuOpen ? 'open' : ''}`}>
+                <ul className={`Header__nav ${isMenuOpen ? 'open' : '' }`}>
                     <Link to='/'>Home</Link>
                     {
                         isLoggedIn && (<>
                             <Link to="/Products" >Products</Link>
+                            <Link to="/Profile" >Profile</Link>
                             {
                                 isAdmin && (
                                     <>

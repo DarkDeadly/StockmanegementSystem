@@ -32,6 +32,7 @@ const handleDemote = async (record) => {
   const docRef = doc(db, "Users", record.id);
   try {
     await updateDoc(docRef , {role : "user"})
+    window.location.reload()
   } catch (error) {
     console.log(error)
   }
