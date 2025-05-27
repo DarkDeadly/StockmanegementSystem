@@ -57,3 +57,8 @@
     flex-direction: column;
     gap: 15px;
 }
+.password__ChangeInput {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

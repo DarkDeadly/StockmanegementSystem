@@ -5,7 +5,7 @@ import { Button, Table } from 'antd';
 
 const UserTable = () => {
     const [users, setUsers] = useState([]);
-
+    
     useEffect(() => {
         const unsubscribe = onSnapshot(collection(db, "Users"), (snapshot) => {
             setUsers(snapshot.docs.map((doc) => ({
@@ -19,16 +19,15 @@ const UserTable = () => {
     }, []);
 
 const handlePromoteAdmin = async (record) => {
-  console.log('User Data:', record); // ✅ This logs the table row
   const docRef = doc(db, "Users", record.id);
   try {
     await updateDoc(docRef , {role : "admin"})
+      window.location.reload()
   } catch (error) {
     console.log(error)
   }
 };
 const handleDemote = async (record) => {
-  console.log('User Data:', record); // ✅ This logs the table row
   const docRef = doc(db, "Users", record.id);
   try {
     await updateDoc(docRef , {role : "user"})

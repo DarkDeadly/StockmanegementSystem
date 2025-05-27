@@ -1,5 +1,5 @@
-import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
-import { Avatar, Button, Input } from 'antd'
+import { EyeInvisibleOutlined, EyeOutlined, LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
+import { Avatar, Button, Input, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
 import './profilecontent.css'
 import Btn from '../button/Btn'
@@ -8,6 +8,28 @@ import { auth, db } from '../../util/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 const ProfileContent = () => {
     const [ProfileUser, setProfileUser] = useState()
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [passHidden, setpassHidden] = useState(false)
+    const [confirmpassHidden, setconfirmpassHidden] = useState(false)
+    const [Password, setPassword] = useState("")
+    const [NewPassword, setNewPassword] = useState("")
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+    const ShowPass = () => {
+        setpassHidden(!passHidden)
+    }
+    const showConfirm = () => {
+        setconfirmpassHidden(!confirmpassHidden)
+    }
         useEffect(() => {
           const ProfileUserShowcase = onAuthStateChanged(auth , async(user) => {
             if (user) {
@@ -53,7 +75,7 @@ const ProfileContent = () => {
                 <Input size="large" placeholder={ProfileUser?.data?.username || "Username"} prefix={<UserOutlined  />  } />
                 <Input size="large" placeholder={ProfileUser?.data?.email || "Email"} prefix={<MailOutlined /> } type='email'/>
                 <div className="formBtns">
-                    <Btn btnText='Change Password' btnClass=' navBtn Btns'/>
+                    <Btn btnText='Change Password' btnClass=' navBtn Btns' btnClick={showModal}/>
                     <Btn btnText='Submit Changes' btnClass=' navBtn Btns'/>
                 </div>
 
@@ -61,6 +83,36 @@ const ProfileContent = () => {
             </form>
         </div>
         </div>
+        <Modal
+        title="Change Your Password"
+        closable={{ 'aria-label': 'Custom Close Button' }}
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <div className="password__ChangeInput">
+        <Input 
+        size="large" 
+        placeholder='Current Password' 
+        prefix={<LockOutlined  />  } 
+        type={passHidden ? 'text' : 'password'}
+        onChange={(e) => setPassword(e.target.value)}
+        suffix={passHidden ? <EyeInvisibleOutlined
+        onClick={ShowPass} /> : <EyeOutlined onClick={ShowPass} />}
+        />
+        <Input 
+        size="large"
+        placeholder='New Password' 
+        prefix={<LockOutlined  />  } 
+        type={confirmpassHidden ? 'text' : 'password'}
+        onChange={(e) => setNewPassword(e.target.value)}
+        suffix={confirmpassHidden ? <EyeInvisibleOutlined
+        onClick={showConfirm} /> : <EyeOutlined onClick={showConfirm} />}
+        />
+        <Btn btnText='Submit' btnClass='navBtn Btns' />
+        </div>
+
+      </Modal>
     </div>
   )
 }
