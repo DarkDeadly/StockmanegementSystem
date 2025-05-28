@@ -48,7 +48,7 @@ const columns = [
     render: (_, record) => (
         <div>
         <Button type="link" onClick={() => handlePromoteAdmin(record)}>
-          Promote Admin
+          Promote 
         </Button>
         <Button type="link" onClick={() => handleDemote(record)}>
           demote

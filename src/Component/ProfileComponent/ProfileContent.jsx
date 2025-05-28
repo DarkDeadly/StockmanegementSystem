@@ -63,7 +63,6 @@ const ProfileContent = () => {
         return () => ProfileUserShowcase()
     }, [])
 
-    console.log(ProfileUser)
 
     const HandlepasswordChange = async (password, newPass) => {
         try {

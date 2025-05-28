@@ -1,0 +1,24 @@
+.Products {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+
+    .Products__Section {
+        flex: 1;
+        height: 100%;
+        width: 90%;
+        .Input__Box {
+            width: 100%;
+            background-color: rgba(191, 68, 8, 0.3);
+            border-color: var(--primaryColor);
+            margin: 10px 0;
+            
+        }
+    }
+}
+
+.Input__Box .ant-input-prefix {
+  margin-right: 10px; 
+}

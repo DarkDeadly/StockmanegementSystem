@@ -1,0 +1,10 @@
+.ProductAdd {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+        h1 {
+            font-size: var(--SubHeadline);
+            font-family: var(--headingFont);
+            letter-spacing: 5px;
+        }
+}
