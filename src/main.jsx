@@ -23,11 +23,7 @@ const routing  = createBrowserRouter(
       path: '/About',
       element : <AboutUs/>
     },
-    {
-      path : '/Analytics',
-      element: <Analytics/>
-
-    }, 
+ 
     {
       path : '/Users',
       element: <UserManagement/>

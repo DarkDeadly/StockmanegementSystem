@@ -69,7 +69,6 @@ useEffect(() => {
                             {
                                 isAdmin && (
                                     <>
-                                     <Link to='/Analytics' >Analytics</Link>
                                      <Link to='/Users' >Users</Link>
                                     </>
                                 )
