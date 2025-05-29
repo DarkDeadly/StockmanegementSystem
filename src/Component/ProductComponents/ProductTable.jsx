@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './productTable.css'
 import { collection,  onSnapshot } from 'firebase/firestore';
 import {  db } from '../../util/firebase';
-const ProductTable = ({IsAdmin}) => {
+const ProductTable = ({IsAdmin , Products}) => {
     const columns = [
   { title: 'Name', dataIndex: 'name', key: 'name' },
   { title: 'category', dataIndex: 'category', key: 'category' , responsive: ['sm']},
@@ -11,22 +11,6 @@ const ProductTable = ({IsAdmin}) => {
   {
     title: 'price',dataIndex: 'price',key: 'price',},
 ];
-  const [Products, setProducts] = useState([]);
-   useEffect(() => {
-    const unsubscribeProducts = onSnapshot(collection(db, 'Products'), (snapshot) => {
-      setProducts(snapshot.docs.map((doc) => ({
-        id: doc.id,
-        key: doc.id,
-        ...doc.data(),
-      })));
-    });
-
- 
-
-    return () => unsubscribeProducts();
-     
-    
-  }, []);
 
   return (
   <Table

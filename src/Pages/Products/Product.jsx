@@ -7,10 +7,16 @@ import { SearchOutlined } from '@ant-design/icons'
 import ProductTable from '../../Component/ProductComponents/ProductTable'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from '../../util/firebase'
-import { doc, getDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, onSnapshot } from 'firebase/firestore'
 const Product = () => {
    const [IsAdmin, setIsAdmin] = useState(false)    
-  
+    const [Products, setProducts] = useState([]);
+    const [Search, setSearch] = useState("")
+    const FilterProducts = Products.filter(product => 
+        product.name.toLowerCase().includes(Search.toLowerCase()) 
+        
+
+    )
    useEffect(() => {
        const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -29,25 +35,37 @@ const Product = () => {
         setIsAdmin(false);
       }
     });
+    const unsubscribeProducts = onSnapshot(collection(db, 'Products'), (snapshot) => {
+      setProducts(snapshot.docs.map((doc) => ({
+        id: doc.id,
+        key: doc.id,
+        ...doc.data(),
+      })));
+    });
+
+  
    
      return () => {
        unsubscribeAuth();
+       unsubscribeProducts();
+      
      }
    }, [])
   return (
     <div className='Products'>
         <Header/>
         <div className="Products__Section">
-          <ProductAdd IsAdmin = {IsAdmin}/>
+          <ProductAdd IsAdmin = {IsAdmin} />
            <Input
               size="large"
               placeholder="Search Product"
               type="text"
               prefix={<SearchOutlined />}
               className={`Input__Box`}
+              onChange={(e) => setSearch(e.target.value)}
            
             />
-            <ProductTable IsAdmin = {IsAdmin} />
+            <ProductTable IsAdmin = {IsAdmin} Products = {FilterProducts}/>
        </div>
        
     </div>
