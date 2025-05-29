@@ -4,7 +4,7 @@ import './productAdd.css'
 import { Button, Input, Modal, Select, Space } from 'antd';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../../util/firebase';
-const ProductAdd = () => {
+const ProductAdd = ({IsAdmin}) => {
         const initialOptions = [
         { value: 'Sport', label: 'Sport' },
         { value: 'Furniture', label: 'Furniture' },
@@ -71,7 +71,10 @@ const addProducts = async (number, name, price, category) => {
 
         <div className='ProductAdd'>
             <h1>Products</h1>
-            <Btn btnText='Add Product' btnClass='navBtn' btnClick={showModal} />
+            {
+                IsAdmin &&  <Btn btnText='Add Product' btnClass='navBtn' btnClick={showModal} />
+            }
+           
             <Modal
                 title="Add Product"
                 closeIcon={<span aria-label="Close">X</span>}
