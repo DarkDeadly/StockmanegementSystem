@@ -1,11 +1,11 @@
-import { EyeInvisibleOutlined, EyeOutlined, LockOutlined,  UserOutlined } from '@ant-design/icons'
-import {  Avatar,  Input, message, Modal } from 'antd'
+import { EyeInvisibleOutlined, EyeOutlined, LockOutlined, UserOutlined } from '@ant-design/icons'
+import { Avatar, Input, message, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
 import './profilecontent.css'
 import Btn from '../button/Btn'
 import { EmailAuthProvider, onAuthStateChanged, reauthenticateWithCredential, updatePassword } from 'firebase/auth'
 import { auth, db } from '../../util/firebase'
-import { doc, getDoc ,updateDoc  } from 'firebase/firestore'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { PasswordVerif } from '../../util/util'
 const ProfileContent = () => {
     const [ProfileUser, setProfileUser] = useState()
@@ -16,7 +16,7 @@ const ProfileContent = () => {
     const [NewPassword, setNewPassword] = useState("")
     const [currenpassError, setcurrenpassError] = useState("")
     const [Username, setUsername] = useState("")
-        const errors = PasswordVerif(NewPassword)
+    const errors = PasswordVerif(NewPassword)
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -68,48 +68,48 @@ const ProfileContent = () => {
         try {
             const user = auth.currentUser
             if (!user?.email) {
-            message.error("Your account doesn't have an email. Cannot reauthenticate.");
-            return;
-}
+                message.error("Your account doesn't have an email. Cannot reauthenticate.");
+                return;
+            }
             const credential = EmailAuthProvider.credential(user.email, password)
             const currentPassTrue = await reauthenticateWithCredential(user, credential)
             if (currentPassTrue) {
-             const PasswordVerification = PasswordVerif(newPass)
-             if (PasswordVerification.length === 0) {
-                   await updatePassword(user, newPass)
-                
+                const PasswordVerification = PasswordVerif(newPass)
+                if (PasswordVerification.length === 0) {
+                    await updatePassword(user, newPass)
+
                     console.log("Password updated successfully");
                     alert("Password successfully updated");
                     setPassword("")
                     setNewPassword("")
                     setIsModalOpen(false)
-                
-             }
+
+                }
 
             }
         } catch (error) {
             console.log(error)
-              if (error.code === "auth/invalid-credential") {
+            if (error.code === "auth/invalid-credential") {
                 setcurrenpassError("Incorrect current password.")
                 setPassword("")
                 setNewPassword("")
-        } else {
-            message.error("Failed to update password.");
-        }
+            } else {
+                message.error("Failed to update password.");
+            }
         }
     }
 
-    const UsernameEdit = async(username , currentUsername) => {
+    const UsernameEdit = async (username, currentUsername) => {
         const trimmeduserName = username || currentUsername
         const user = auth.currentUser
         try {
-            await   updateDoc(doc(db , "Users" , user.uid) , {username : trimmeduserName})
+            await updateDoc(doc(db, "Users", user.uid), { username: trimmeduserName })
             message.success("Username updated successfully");
             window.location.reload()
         } catch (error) {
-           console.log(error) 
+            console.log(error)
         }
-        
+
     }
     return (
         <div className='ProfileContent'>
@@ -130,16 +130,16 @@ const ProfileContent = () => {
                 <div className="Profile__Form">
                     <form action="" className='Profile__FormContent'>
                         <h2>Account Settings</h2>
-                        <Input 
-                        size="large" 
-                        placeholder={ProfileUser?.data?.username || "Username"} 
-                        prefix={<UserOutlined />} 
-                        onChange={(e) => setUsername(e.target.value)}
-                        
+                        <Input
+                            size="large"
+                            placeholder={ProfileUser?.data?.username || "Username"}
+                            prefix={<UserOutlined />}
+                            onChange={(e) => setUsername(e.target.value)}
+
                         />
                         <div className="formBtns">
                             <Btn btnText='Change Password' btnClass=' navBtn Btns' btnClick={showModal} />
-                            <Btn btnText='Submit Changes' btnClass=' navBtn Btns' btnClick={()=> UsernameEdit(Username ,ProfileUser?.data?.username )} />
+                            <Btn btnText='Submit Changes' btnClass=' navBtn Btns' btnClick={() => UsernameEdit(Username, ProfileUser?.data?.username)} />
                         </div>
 
 
@@ -161,7 +161,7 @@ const ProfileContent = () => {
                         type={passHidden ? 'text' : 'password'}
                         onChange={(e) => setPassword(e.target.value)}
                         suffix={passHidden ? <EyeInvisibleOutlined
-                        onClick={ShowPass} /> : <EyeOutlined onClick={ShowPass} />}
+                            onClick={ShowPass} /> : <EyeOutlined onClick={ShowPass} />}
                     />
                     {currenpassError && <p className="error-message">{currenpassError}</p>}
                     <Input
@@ -171,21 +171,28 @@ const ProfileContent = () => {
                         type={confirmpassHidden ? 'text' : 'password'}
                         onChange={(e) => setNewPassword(e.target.value)}
                         suffix={confirmpassHidden ? <EyeInvisibleOutlined
-                        onClick={showConfirm} /> : <EyeOutlined onClick={showConfirm} />}
+                            onClick={showConfirm} /> : <EyeOutlined onClick={showConfirm} />}
                     />
                     <Btn
                         btnText='Submit'
                         btnClass='navBtn Btns'
-                        btnClick={() => HandlepasswordChange(Password, NewPassword)}
+                        btnClick={() => {
+                            const confirmChange = window.confirm(`Are you sure you want to Change your password ?`);
+                            if (confirmChange) {
+                                HandlepasswordChange(Password, NewPassword)
+                            }
+                        }
+                        }
+
                         disabled={!Password || !NewPassword || errors.length > 0}
                     />
-                    {  NewPassword && errors.length > 0 && (
-                                <ul className="error-message" >
-                                    {errors.map((err, i) => (
-                                        <li key={i}>{err}</li>
-                                    ))}
-                                </ul>
-                            )}
+                    {NewPassword && errors.length > 0 && (
+                        <ul className="error-message" >
+                            {errors.map((err, i) => (
+                                <li key={i}>{err}</li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
 
             </Modal>
